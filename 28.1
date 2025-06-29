@@ -1,5 +1,4 @@
 #include <iostream>
-using namespace std;
 
 template <typename T>
 class Queue
@@ -37,7 +36,7 @@ public:
     {
         if (IsFull())
         {
-            cout << "The queue is full!\n";
+            std::cout << "The queue is full!\n";
             return;
         }
         rear++;
@@ -48,7 +47,7 @@ public:
     {
         if (IsEmpty())
         {
-            cout << "The queue is empty!\n";
+            std::cout << "The queue is empty!\n";
             return;
         }
         front++;
@@ -58,15 +57,15 @@ public:
     {
         if (IsEmpty())
         {
-            cout << "The queue is empty!\n";
+            std::cout << "The queue is empty!\n";
             return;
         }
-        cout << "Queue elements: ";
+        std::cout << "Queue elements: ";
         for (int i = front; i <= rear; ++i)
         {
-            cout << arr[i % capacity] << " ";
+            std::cout << arr[i % capacity] << " ";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 };
 
@@ -91,3 +90,4 @@ int main()
 
     return 0;
 }
+
