@@ -1,0 +1,93 @@
+#include <iostream>
+using namespace std;
+
+template <typename T>
+class Queue
+{
+    int front;
+    int rear;
+    int capacity;
+    T* arr;
+
+public:
+    Queue(int size = 10)
+    {
+        capacity = size;
+        arr = new T[capacity];
+        front = 0;
+        rear = -1;
+    }
+
+    ~Queue()
+    {
+        delete[] arr;
+    }
+
+    bool IsEmpty() const
+    {
+        return front > rear;
+    }
+
+    bool IsFull() const
+    {
+        return rear - front + 1 == capacity;
+    }
+
+    void Enqueue(T value)
+    {
+        if (IsFull())
+        {
+            cout << "The queue is full!\n";
+            return;
+        }
+        rear++;
+        arr[rear % capacity] = value;
+    }
+
+    void Dequeue()
+    {
+        if (IsEmpty())
+        {
+            cout << "The queue is empty!\n";
+            return;
+        }
+        front++;
+    }
+
+    void Show() const
+    {
+        if (IsEmpty())
+        {
+            cout << "The queue is empty!\n";
+            return;
+        }
+        cout << "Queue elements: ";
+        for (int i = front; i <= rear; ++i)
+        {
+            cout << arr[i % capacity] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main()
+{
+    Queue<int> q(5);
+
+    q.Enqueue(10);
+    q.Enqueue(20);
+    q.Enqueue(30);
+
+    q.Show();
+
+    q.Dequeue();
+    q.Show();
+
+    q.Enqueue(40);
+    q.Enqueue(50);
+    q.Enqueue(60);
+
+    q.Show();
+
+    return 0;
+}
