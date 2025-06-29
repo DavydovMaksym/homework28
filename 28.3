@@ -1,0 +1,106 @@
+#include <iostream>
+
+const int MAX_SIZE = 100;
+template <typename T>
+class PriorityQueue
+{
+    struct Element
+    {
+        T value;
+        int priority;
+    };
+
+    Element queue[MAX_SIZE];
+    int size;
+
+public:
+    PriorityQueue() : queue{}, size(0) {}
+
+    bool IsEmpty() const
+    {
+        return size == 0;
+    }
+
+    bool IsFull() const
+    {
+        return size == MAX_SIZE;
+    }
+
+    void InsertWithPriority(const T& value, int priority)
+    {
+        if (IsFull())
+        {
+            std::cout << "The queue is full!\n";
+            return;
+        }
+
+        int i;
+        for (i = size - 1; i >= 0 && queue[i].priority < priority; --i)
+        {
+            queue[i + 1] = queue[i];
+        }
+
+        queue[i + 1].value = value;
+        queue[i + 1].priority = priority;
+        size++;
+    }
+
+    void PullHighestPriorityElement()
+    {
+        if (IsEmpty())
+        {
+            std::cout << "The queue is empty!\n";
+            return;
+        }
+
+        size--;
+        for (int i = 0; i < size; ++i)
+        {
+            queue[i] = queue[i + 1];
+        }
+    }
+
+    T Peek() const
+    {
+        if (IsEmpty())
+        {
+            std::cout << "The queue is empty!\n";
+            return T();
+        }
+        return queue[0].value;
+    }
+
+    void Show() const
+    {
+        if (IsEmpty())
+        {
+            std::cout << "The queue is empty!\n";
+            return;
+        }
+
+        std::cout << "Queue elements with priorities:\n";
+        for (int i = 0; i < size; ++i)
+        {
+            std::cout << "Value: " << queue[i].value
+                << ", Priority: " << queue[i].priority << '\n';
+        }
+    }
+};
+
+int main()
+{
+    PriorityQueue<int> pq;
+
+    pq.InsertWithPriority(10, 2);
+    pq.InsertWithPriority(30, 1);
+    pq.InsertWithPriority(20, 3);
+
+    pq.Show();
+
+    std::cout << "Highest priority (Peek): " << pq.Peek() << '\n';
+
+    pq.PullHighestPriorityElement();
+    pq.Show();
+
+    return 0;
+}
